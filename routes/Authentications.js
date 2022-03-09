@@ -49,7 +49,7 @@ router.post("/add", async (req,res) => {
 
 })
 
-
+//login function
 router.post('/login', async (req, res) => {
     
     let getUser;
@@ -86,6 +86,7 @@ router.post('/login', async (req, res) => {
     });
 })
 
+//update user details
 router.put("/update/:userID", authorize, async (req,res) => {
 
     try{
