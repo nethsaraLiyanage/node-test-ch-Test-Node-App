@@ -52,33 +52,6 @@ router.post("/add", async (req,res) => {
 
 router.post('/login', async (req, res) => {
     
-    // //authenticating the user
-    // let username = req.body.username;
-    // let password = req.body.password;
-
-    // const user = User.findOne( user => username === username)
-
-    // //checking whether the username is correct
-    // if (user == null){
-    //     return res.status(400).send('Cannot find the user')
-    // }
-
-    // try{
-    //     if(await bcrypt.compare(req.body.password, user.password)){
-    //         console.log('password')
-    //         let jwtToken = jwt.sign(user,  process.env.ACCESS_TOKEN_SECRET ,{expiresIn: '15m'});
-    //         res.status(200).json({
-    //             token: jwtToken,
-    //             expiresIn: '15m',
-    //             msg: 'User Authenticated!'
-    //         });
-    //     }else{
-    //         res.send('Unautherized User. User Not allowed')
-    //     }
-    // }catch{
-    //     res.status(500).send()
-    // }
-
     let getUser;
     User.findOne({
         username: req.body.username
@@ -116,7 +89,6 @@ router.post('/login', async (req, res) => {
 router.put("/update/:userID", authorize, async (req,res) => {
 
     try{
-
         let userID = req.params.userID;
         let fullName = req.body.fullName;
         let email = req.body.email;
@@ -131,7 +103,6 @@ router.put("/update/:userID", authorize, async (req,res) => {
             username: username,
             mobileNumber: mobileNumber,
         }
-
         const  updateValue = await User.findByIdAndUpdate(userID,updatedValue).then(() => {
             res.json({status:200, message:'User details successfully updated'})
         }).catch((err) => {

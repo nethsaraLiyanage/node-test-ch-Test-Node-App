@@ -9,12 +9,15 @@ const PORT = process.env.PORT || 8000;
 
 //Import Routes
 const UserAuth = require('./routes/Authentications')
+const ItemRoutes = require('./routes/ItemRoutes')
 
 //Middleware
 app.use(express.json())
 
 //routes
 app.use('/user-auth',UserAuth)
+app.use('/item',ItemRoutes)
+
 
 app.get('/', (req, res) => {
   res.send('Test Node Project (node-test-ch) is up and running...');  
