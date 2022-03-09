@@ -1,15 +1,17 @@
 const router = require('express').Router();
 
 //models import
-const Item = require('../models/Item');
+const Item = require('../models/Items');
 const Cart = require('../models/Cart');
 const Cart_Item = require('../models/Cart_item');
+
+const authorize = require('../config/auth')
 
 require('dotenv').config();
 
 
 //add new item
-router.post('/create', async (req, res) => {
+router.post('/create', authorize, async (req, res) => {
     try{
         const data = await Item.create({
             itemTitle : req.body.itemTitle,
@@ -25,7 +27,7 @@ router.post('/create', async (req, res) => {
 });
 
 //get all items
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     const data = await Item.find({})
     res.send(data)
 });
@@ -39,7 +41,7 @@ router.get('/:type', async (req, res) => {
 
 
 //add item to the cart
-router.post('/cart-item', async (req, res, _next) => {
+router.post('/cart-item', authorize, async (req, res, _next) => {
 
     const data = await Cart_Item.create({
         itemTitle : req.body.itemTitle,
@@ -54,7 +56,7 @@ router.post('/cart-item', async (req, res, _next) => {
 
 
 //get cart items from the cart fro logged in user
-router.get('/get-cart-items/:id',async (req,res) =>{
+router.get('/get-cart-items/:id', authorize, async (req,res) =>{
     
     try {
         const items = await Cart.findOne({user_id : req.params.id}).populate('items')

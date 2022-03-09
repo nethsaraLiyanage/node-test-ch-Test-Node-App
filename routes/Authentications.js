@@ -121,6 +121,10 @@ router.get("/delete/:userID", authorize, async (req,res) => {
 
     const userID = req.params.userID;
 
+    User.findOne({
+        _id: req.body.userID
+    })
+
     User.findByIdAndDelete(userID).then(() => {
         res.json({status:200, message:'Successfully deleted'})
     }).catch((err) => { 
